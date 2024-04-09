@@ -12,42 +12,14 @@
       department: [Mechanical Engineering],
       organization: [National University of Singapore],
       location: [Singapore, Singapore],
-      email: "A0285295N"
+      email: "haug@typst.app"
     ),
     (
-      name: "LI ZHANGJIN",
-      department: [Mechanical Engineering],
-      organization: [National University of Singapore],
-      location: [Singapore, Singapore],
-      email: "A0285091B"
-    ),
-    (
-      name: "WANG YUANLONG",
-      department: [Mechanical Engineering],
-      organization: [National University of Singapore],
-      location: [Singapore, Singapore],
-      email: "A0284868E"
-    ),
-    (
-      name: "ZHAO HUAIYI",
-      department: [Mechanical Engineering],
-      organization: [National University of Singapore],
-      location: [Singapore, Singapore],
-      email: "A0285277N"
-    ),
-    (
-      name: "ZHAO XU",
-      department: [Mechanical Engineering],
-      organization: [National University of Singapore],
-      location: [Singapore, Singapore],
-      email: "A0285284U"
-    ),
-    (
-      name: "ZHU RONG",
-      department: [Mechanical Engineering],
-      organization: [National University of Singapore],
-      location: [Singapore, Singapore],
-      email: "A0284901A"
+      name: "Laurenz Mädje",
+      department: [Co-Founder],
+      organization: [Typst GmbH],
+      location: [Berlin, Germany],
+      email: "maedje@typst.app"
     ),
   ),
   index-terms: ("Scientific writing", "Typesetting", "Document creation", "Syntax"),
