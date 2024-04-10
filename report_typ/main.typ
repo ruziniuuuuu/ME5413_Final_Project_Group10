@@ -604,7 +604,24 @@ caption: [rosgraph],
 ) <fig:fastlio_yunxingtu>
 
 #figure(
-image("assets/mapping/pcd_to_map.png", width: 80%),
+  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 60%),
+  caption: [A-LOAM Running Visualization],
+) <fig:A-LOAM_Running_Visualization>
+
+#figure(
+  image("assets/mapping/A-Loam_rosnode.png", width: 60%),
+  caption: [A-Loam_rosnode],
+) <fig:A-Loam_rosnode>
+
+#figure(
+image("assets/mapping/pcd_to_map.png", width: 60%),
+caption: [Pcd To Map Launch File],
+) <fig:pcd_to_map>
+
+
+
+#figure(
+image("assets/mapping/pcd_to_map.png", width: 60%),
 caption: [Pcd To Map Launch File],
 ) <fig:pcd_to_map>
 
