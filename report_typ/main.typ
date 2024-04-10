@@ -280,8 +280,10 @@ Comparative experiments showed that AMCL provided more stable and accurate local
 === Costmap
 
 The robotic system's navigation framework uses a composite costmap divided into global and local representations.
-- The global costmap represents the environmental model constructed by the Fast-Lio package, with its configuration parameters in the `jackal_navigation/params/costmap_common_params.yaml` file. It provides a high-level overview of the robot's operational terrain.
-- The local costmap focuses on the robot's immediate surroundings, supporting local pathfinding and collision avoidance. It is continuously updated with real-time sensor data, such as laser scans and point clouds, and has a smaller scale but higher resolution compared to the global costmap.
+- *The global costmap* represents the environmental model constructed by the Fast-Lio package, with its configuration parameters in the `jackal_navigation/params/costmap_common_params.yaml` file. It provides a high-level overview of the robot's operational terrain.
+- *The local costmap* focuses on the robot's immediate surroundings, supporting local pathfinding and collision avoidance. It is continuously updated with real-time sensor data, such as laser scans and point clouds, and has a smaller scale but higher resolution compared to the global costmap.
+
+As can be seen in @fig:global_costmap, the global costmap provides a bird's-eye view of the environment, highlighting the various zones and obstacles within the mini-factory. The costmap is color-coded to represent different cost values, with higher costs indicating obstacles or restricted areas that the robot should avoid during navigation.
 
 #figure(
   placement: auto,
@@ -312,6 +314,7 @@ The A\* algorithm is employed for global planning within the `move_base` package
 The global planner's behavior can be configured through the `jackal_navigation/params/global_planner_params.yaml` file, where parameters such as path cost weights, planning resolution, and obstacle handling can be adjusted. Tuning these settings allows the navigation system to be optimized for different scenarios, balancing path efficiency and computational demands.
 
 #figure(
+  placement: auto,
   grid(
     columns: 2,
     image("assets/planning/global_navigation_to_vehicle1.png", width: 80%),
@@ -326,6 +329,7 @@ The global planner's behavior can be configured through the `jackal_navigation/p
 For local planning, the Time-Elastic Band (Teb) algorithm is employed, focusing on real-time adjustments to navigate around immediate obstacles and dynamic environmental changes. The Teb planner's configuration is managed through the `teb_local_planner_params.yaml` file, allowing for fine-tuning of parameters such as obstacle avoidance behavior, robot velocity limits, and path flexibility. These adjustments enable the local planner to adapt to varying conditions, ensuring smooth and efficient navigation.
 
 #figure(
+  placement: auto,
   image("assets/localization/local_mapping_effect.jpg", width: 50%),
   caption: [Improvements in local mapping for navigation],
 ) <fig:local_mapping_effect>
@@ -364,6 +368,7 @@ The `weight_kinematics_nh` parameter in the TebLocalPlannerROS configuration is 
 In this section, we adapt the position error, heading error, relative position error, and relative heading error as evaluation indices to compare the performance of the robot navigating to the same location (Assembly Line 2) when applied to two different local planners: TEB and DWA. The results are shown in @fig:errors_teb_dwa, and a further comparison is presented in @tab:teb_dwa_comparison.
 
 #figure(
+  placement: auto,
   grid(
     columns: 2,
     image("assets/errors_dwa.png", width: 90%),
@@ -373,6 +378,7 @@ In this section, we adapt the position error, heading error, relative position e
 ) <fig:errors_teb_dwa>
 
 #figure(
+  placement: auto,
   tablex(
     columns: 3,
     align: horizon,
@@ -457,13 +463,13 @@ Finally, a `PoseStamped` message is constructed with the transformed point's pos
 #figure(
   placement: auto,
   image("assets/object_detection/find_object_3d.png"),
-  caption: [Box3 identification by find_object_3d],
+  caption: [Box3 identification by `find_object_3d`],
 ) <fig:find_object_3d>
 
 #figure(
   placement: auto,
   image("assets/object_detection/template_matching.png", width: 70%),
-  caption: [Box3 identification by find_object_3d],
+  caption: [Box3 identification by `template matching`],
 ) <fig:template_matching>
 
 === Two Methods for Object Detection
@@ -548,6 +554,7 @@ We have mainly used three nodes to implement the decision (i.e. How to get to th
 The random exploration policy is implemented in the `box_explorer_node.cpp` file. A basic process is shown in the figure below:
 
 #figure(
+  placement: auto,
   image("assets/decision_making/random_exploration_policy.png"),
   caption: [Flowchart of decision making],
 ) <fig:random_exploration_policy>
