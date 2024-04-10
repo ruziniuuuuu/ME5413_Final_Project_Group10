@@ -4,9 +4,9 @@
 #[
 
 #show: ieee.with(
-  title: [Autonomous Mobile Robotics Final Project Group 10],
+  title: [*Autonomous Mobile Robotics Final Project Group 10*],
   abstract: [
-    This project focuses on the development and implementation of an autonomous navigation system for a Jackal robot in a simulated mini-factory environment using the Gazebo framework. The primary objective is to guide the robot through a predefined sequence of locations while mapping the environment, localizing the robot, and detecting and navigating to a specific object (a box with the number 3). The system integrates state-of-the-art algorithms such as FAST-LIO for mapping, Adaptive Monte Carlo Localization (AMCL) for localization, A\* for global path planning, and the Time Elastic Band (Teb) approach for local planning. Additionally, the project incorporates object detection using template matching and the find_object_2d package, as well as a random exploration policy and collision checking for efficient decision-making. The performance of the navigation system is evaluated in terms of its ability to accurately map the environment, localize the robot, and navigate to the target locations while avoiding obstacles. The project's outcomes demonstrate the effectiveness of the selected algorithms and provide insights into the challenges and potential improvements in autonomous robot navigation for industrial applications.
+    This project develops an autonomous navigation system for a Jackal robot in a simulated mini-factory using Gazebo. The robot must map the environment, localize itself, and navigate to a specific object while following a predefined sequence of locations. The system integrates FAST-LIO for mapping, Adaptive Monte Carlo Localization (AMCL) for localization, A\* for global path planning, Time Elastic Band (Teb) for local planning, object detection using template matching and find_object_2d, random exploration policy, and collision checking. The navigation system's performance is evaluated based on its ability to map the environment, localize the robot, and navigate to target locations while avoiding obstacles. The project demonstrates the effectiveness of the selected algorithms and provides insights into the challenges and potential improvements in autonomous robot navigation for industrial applications.
   ],
   authors: (
     (
@@ -56,18 +56,19 @@
   bibliography: bibliography("refs.bib"),
 )
 
-== Project Description
+#heading(
+  numbering: none,
+  [*Project Description*]
+)
 
-In the ever-evolving domain of mobile robotics, pivotal for technological advancement, this project is situated within a simulated mini-factory environment, meticulously orchestrated in the Gazebo framework. This setup is delineated into three targeted zones and a singular restricted area, each tailored to appraise the efficacy of diverse mapping and navigational algorithms.
-
-The core challenge of this initiative revolves around the formulation and deployment of an advanced robot navigation software stack. This is aimed at guiding our designated `Jackal` robot through a predetermined sequence of locations within the simulation. Commencing from the Assembly Line sections labeled 1 and 2, the journey extends through Random Box zones 1 to 4, culminating at Delivery Vehicle stations 1, 2, and 3 which are shown in @fig:map_overview. This sequence serves not only to evaluate the robot's proficiency in navigation but also to scrutinize the robustness and flexibility of the underlying algorithms against the backdrop of the simulated mini-factory's dynamic conditions.
+This project focuses on developing and deploying an advanced robot navigation software stack in a simulated mini-factory environment using the Gazebo framework. The environment is divided into three targeted zones and a restricted area to evaluate various mapping and navigational algorithms. The main objective is to guide the 'Jackal' robot through a predefined sequence of locations, starting from Assembly Line sections 1 and 2, through Random Box zones 1 to 4, and ending at Delivery Vehicle stations 1, 2, and 3, as shown in @fig:map_overview. This sequence aims to assess the robot's navigational abilities and the robustness and flexibility of the underlying algorithms within the dynamic conditions of the simulated mini-factory.
 
 #figure(
-image("assets/map_overview.png", width: 100%),
+image("assets/map_overview.png", width: 80%),
 caption: [Schematic of mini-factory environment],
 ) <fig:map_overview>
 
-== Task 1: Mapping
+= Task 1: Mapping
 
 === Problems in LiDAR SLAM Algorithms
 
@@ -88,8 +89,7 @@ caption: [Schematic of mini-factory environment],
 === Algorithms Introduction
 
 ==== FAST-LIO
-
-The mapping pipeline in this project is built upon the Fast-Lio package, which is selected for the primary mapping phase. FAST-LIO effectively mitigates drift by fusing dynamic motion detection with static environmental scanning to refine pose accuracies through iterative state estimation processes that resemble Kalman Filter methodologies. The mapping sequence generates a .pcd file that details the surveyed environment, which is then converted into a .pgm format for navigation and global costmap deployment.
+The mapping pipeline in this project is built upon the Fast-Lio package, which is selected for the primary mapping phase. FAST-LIO effectively mitigates drift by fusing dynamic motion detection with static environmental scanning to refine pose accuracies through iterative state estimation processes that resemble Kalman Filter methodologies. The mapping sequence generates a .pcd file that details the surveyed environment, which is then converted into a `.pgm` format for navigation and global costmap deployment.
 
 The 16-beam LiDAR system for the robotic platform is initialized through the launch file specified in `src/me5413_world/launch/fast_lio.launch`, with the relevant line as follows:
 
@@ -114,51 +114,31 @@ The `velodyne.yaml` file contains the configuration for the FAST-LIO package's `
 
 The varying densities of points within the image indicate the algorithm's capability to discern between different surfaces and objects. Areas of higher point density suggest closer proximity or more reflective surfaces, while sparser areas indicate distant or less reflective materials. The nuanced differences in the point cloud formations demonstrate FAST-LIO's precision in capturing the environment's geometry.
 
-#figure(
-  image("assets/mapping/fastlio_yunxingtu.png", width: 60%),
-  caption: [FAST-LIO Running Visualization],
-) <fig:fastlio_yunxingtu>
-
-@fig:fastlio_yunxingtu showcases the advanced visualization capabilities of the FAST-LIO algorithm, where the multi-colored point cloud exhibits the depth and detail achievable through the fusion of LiDAR and IMU data. This image serves as a visual testament to the algorithm's high-resolution spatial mapping and its ability to discern subtle variances in an environment's topography and texture.
-
 ==== FAST-LOAM
-The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an enhanced LiDAR-based SLAM approach that builds upon the foundations of LOAM (LiDAR Odometry and Mapping). FAST-LOAM's core principle lies in its efficient extraction and utilization of features from the point cloud data, which are pivotal for both odometry estimation and map construction.
-
-The mapping module in FAST-LOAM refines the pose graph to account for drift and optimizes the map globally, ensuring a high-fidelity representation of the environment. The "fast" aspect of FAST-LOAM is achieved through optimizations in feature extraction and selection, enabling it to operate effectively even in computationally constrained scenarios, making it suitable for robotic applications where efficiency and speed are essential.
+The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios.
 
 #figure(
   grid(
     columns: 2,
-    image("assets/mapping/f-loam_pcd.png"),
-    image("assets/mapping/a-loam_pcd.png")
+    image("assets/mapping/f-loam_pcd.png", width: 90%),
+    image("assets/mapping/a-loam_pcd.png", width: 90%)
   ),
   caption: [Unfiltered Point Cloud by F-LOAM (Left) and A-LOAM (Right)],
 ) <fig:f_loam_and_a_loam_pcd>
 
-@fig:f_loam_and_a_loam_pcd left depicts the environment's point cloud generated by FAST-LOAM, elucidating its efficacy in navigating the specified areas within the mini-factory. By synthesizing a coherent navigational map from raw sensor inputs, FAST-LOAM supports the Jackal robot's mandate to navigate efficiently and accurately, as mandated by the project's goals.
-
 ==== A-LOAM
-Within the A-LOAM framework, which advances the original LiDAR Odometry and Mapping (LOAM) system through refined feature extraction and code architecture leveraging Eigen and the Ceres Solver, specific topic remappings are essential for its operation. These remappings facilitate the algorithm's real-time pose estimation and environmental mapping capabilities, as shown in @fig:remap_a_loam.
+A-LOAM advances the original LOAM system through refined feature extraction and code architecture leveraging Eigen and the Ceres Solver. Topic remappings are essential for its real-time pose estimation and mapping capabilities. A-LOAM outputs a refined, selectively sparse point cloud. The remappings are specified in the `a_loam.launch` file, as shown in @fig:remap_a_loam.
 
-@fig:f_loam_and_a_loam_pcd right shows A-LOAM's output, a refined version of LOAM, featuring a selectively sparse point cloud.
+@fig:f_loam_and_a_loam_pcd depicts the environment's point cloud generated by FAST-LOAM and A-LOAM, respectively. The FAST-LOAM point cloud exhibits a higher density of points, capturing more detailed environmental features compared to A-LOAM's sparser representation.
 
 === Map Generation
 
 ==== Point Cloud Filtering
-Through the execution of three algorithms, we have generated three raw point cloud maps. To extract more meaningful regions from the raw point cloud, we need to apply filtering.
+We developed a _pcd_to_map.launch_ file to filter the raw point cloud maps generated by three algorithms. The dimensional filtering was set to _thre_radius = 0.3_ and _thres_point_count = 10_, ensuring only regions with a minimum of 10 points within a 0.3 meter radius are considered. 
 
-We developed a _pcd_to_map.launch_ file to implement this functionality.
+The height filtering was implemented with _thre_z_min = -2.0_ and _thre_z_max = 0.7_. Setting _flag_pass_through_ to 1 selects points outside the specified height range, removing unwanted points like buildings. 
 
-The dimensional filtering was performed by setting _thre_radius = 0.3_ and _thres_point_count = 10_. This ensures that only regions with a minimum of 10 points within a 0.3 meter radius are considered for the final map. The height filtering was implemented by setting _thre_z_min = -2.0_ and _thre_z_max = 0.7_ as shown in @fig:pcd_to_map.
-
-#figure(
-image("assets/mapping/pcd_to_map.png", width: 80%),
-caption: [Pcd To Map Launch File],
-) <fig:pcd_to_map>
-
-Additionally, the _flag_pass_through_ was set to 1, which selects the points outside of the specified height range. This helps to remove unwanted points, such as those belonging to buildings or other tall structures, and focus on the desired regions of interest.
-
-Finally, the _map_resolution_ was set to 0.05 to generate the occupancy grid map at a resolution of 5 centimeters per cell. This level of detail is essential for capturing the fine-grained features of the environment and providing a high-quality representation for the subsequent algorithm evaluation and comparison.
+_map_resolution_ was set to 0.05 to generate a detailed 5 cm per cell occupancy grid map for algorithm evaluation and comparison.
 
 ==== Maps Generated and Comparison
 
@@ -167,8 +147,8 @@ The raw point cloud maps and the filtered point cloud maps generated by the thre
 #figure(
   grid(
     columns: 2,
-    image("assets/mapping/fast-lio_pcd_filter.png"),
-    image("assets/mapping/fast-lio_map.png"),
+    image("assets/mapping/fast-lio_pcd_filter.png", width: 90%),
+    image("assets/mapping/fast-lio_map.png", width: 90%),
   ),
   caption: [Filtered Point Cloud by FAST-LIO and Map Generated by FAST-LIO],
 ) <fig:fastlio_map>
@@ -176,8 +156,8 @@ The raw point cloud maps and the filtered point cloud maps generated by the thre
 #figure(
   grid(
     columns: 2,
-    image("assets/mapping/f-loam_pcd_filter.png"),
-    image("assets/mapping/f-loam_map.png"),
+    image("assets/mapping/f-loam_pcd_filter.png", width: 90%),
+    image("assets/mapping/f-loam_map.png", width: 90%),
   ),
   caption: [Filtered Point Cloud by FAST-LOAM and Map Generated by FAST-LOAM],
 ) <fig:floam_map>
@@ -190,21 +170,17 @@ The raw point cloud maps and the filtered point cloud maps generated by the thre
 #figure(
   grid(
     columns: 2,
-    image("assets/mapping/a-loam_pcd_filter.png"),
-    image("assets/mapping/a-loam_map.png"),
+    image("assets/mapping/a-loam_pcd_filter.png", width: 90%),
+    image("assets/mapping/a-loam_map.png", width: 90%),
   ),
   caption: [Filtered Point Cloud by A-LOAM and Map Generated by A-LOAM],
 ) <fig:aloam_map>
 
 @fig:aloam_map presents the mapping outcome of A-LOAM. The sparsity is due to the hardware limitations of the Jackal platform's 16-beam LiDAR sensor.
 
-In the process of enhancing the A-LOAM algorithm's scanning capabilities, an adjustment in the sensor configuration is mandated. Specifically, the substitution of the 3D LiDAR model from VLP-16 to HDL-32E within the Jackal robot's Unified Robot Description Format (URDF) files. This alteration is conducted in the accessories.urdf.xacro file located at _src/jackal_description/urdf_.
+To enhance the A-LOAM algorithm's scanning capabilities, the 3D LiDAR model in the Jackal robot's URDF files needs to be changed from `VLP-16` to `HDL-32E`. This modification is made in the _accessories.urdf.xacro_ file located at _src/jackal_description/urdf_ by replacing the value parameter _vlp16_ with _hdl32e_. This change enables the HDL-32E LiDAR configuration, which offers increased resolution and scanning range, improving the A-LOAM algorithm's environmental scanning efficacy.
 
-To effectuate the desired change for enabling the HDL-32E LiDAR configuration, the value parameter _vlp16_ is to be replaced with _hdl32e_.
-
-Executing this modification primes the system to leverage the increased resolution and scanning range offered by the HDL-32E model, thereby augmenting the environmental scanning efficacy of the A-LOAM algorithm.
-
-In this evaluation of SLAM algorithms, FAST-LIO distinguishes itself as the superior choice for continued project development, attributed to its integrated LiDAR-inertial approach which ensures robust pose estimation even amidst sensor noise and dynamic environmental factors. FAST-LIO's efficient data handling, coupled with its real-time processing capability, further substantiates its selection.
+In the evaluation of SLAM algorithms, FAST-LIO emerges as the superior choice for further project development due to its integrated LiDAR-inertial approach. This approach ensures robust pose estimation even in the presence of sensor noise and dynamic environmental factors. FAST-LIO's efficient data handling and real-time processing capability further justify its selection.
 
 === Evaluate FAST-LIO Performance
 
@@ -235,14 +211,14 @@ evo_ape bag output.bag /gazebo/ground_truth/state /Odometry -r full -va --plot -
 This assessment provides quantitative insights into the FAST-LIO algorithm's positional accuracy by comparing the estimated trajectory with the ground truth using visual plots. Such rigorous analysis is essential for verifying the algorithm's performance and ensuring that it meets the navigational requirements of the project's mini-factory environment.
 
 #figure(
-image("assets/mapping/fastlio_evo1.png", width: 100%),
+image("assets/mapping/fastlio_evo1.png", width:90%),
 caption: [FAST-LIO APE Analysis],
 ) <fig:fastlio_evo1>
 
 @fig:fastlio_evo1 presents the APE results as a time series, allowing us to observe the deviation of the algorithm's estimated poses from the ground truth over the duration of its operation. The plot reveals that the FAST-LIO algorithm largely maintains a low APE, with the majority of the data points clustering around the lower end of the error spectrum.
 
 #figure(
-image("assets/mapping/fastlio_evo2.png", width: 100%),
+image("assets/mapping/fastlio_evo2.png", width: 90%),
 caption: [FAST-LIO APE Analysis],
 ) <fig:fastlio_evo2>
 
@@ -259,6 +235,7 @@ Navigation is a critical capability for robots, involving two key components: lo
 Localization allows the robot to determine its position and orientation within a given coordinate system, which is essential for effective path planning. The robot's various coordinate frames and their relationships are represented in the TF (transformation) tree.
 
 === AMCL
+
 For this project, we used the Adaptive Monte Carlo Localization (AMCL) algorithm from ROS. AMCL is a particle filter-based localization method that can efficiently estimate the robot's pose even in dynamic environments. Key parameters of the AMCL algorithm were configured in the `amcl.launch` file:
 
 - `odom_model_type="diff"`: Specifies the use of the differential drive model for the robot's motion.
@@ -277,37 +254,39 @@ Additional parameters for the global and local cost maps were configured in
 These cost maps provide important environmental information for path planning and navigation.
 
 #figure(
-  image("assets/localization/prohibition.png", width: 80%),
+  image("assets/localization/prohibition.png", width: 70%),
   caption: [AMCL Localization],
 ) <fig:amcl_localization>
 
-==== Other Localization Methods
-In addition to AMCL, we explored two filter-based localization methods: the Extended Kalman Filter (EKF) and the Unscented Kalman Filter (UKF).
+=== Other Localization Methods
 
-- *EKF:* A classic nonlinear estimation algorithm based on Kalman filtering, which linearizes the system and measurement models. Although relatively simple, EKF may introduce significant errors in complex nonlinear systems. EKF-based localization was implemented in the `robot_pose_ekf.launch` file.
+Besides AMCL, we explored two filter-based localization methods: 
 
-- *UKF:* A nonlinear filtering algorithm based on the unscented transform, using carefully selected sample points to approximate the probability distribution and avoid linearization errors. UKF can better handle nonlinear systems and offers advantages in localization accuracy and stability compared to EKF. The UKF-based method was configured in the `ukf_template.launch` file.
+- *Extended Kalman Filter (EKF):* A classic nonlinear estimation algorithm based on Kalman filtering, which linearizes the system and measurement models. Although simple, EKF may introduce significant errors in complex nonlinear systems. EKF-based localization was implemented in the `robot_pose_ekf.launch` file.
 
-Through comparative experiments, we found that AMCL provided more stable and accurate localization results for the project's environment and conditions. Consequently, we chose AMCL as the primary localization method and integrated it into the entire navigation system.
+- *Unscented Kalman Filter (UKF):* A nonlinear filtering algorithm based on the unscented transform, using carefully selected sample points to approximate the probability distribution and avoid linearization errors. UKF better handles nonlinear systems and offers advantages in localization accuracy and stability compared to EKF. The UKF-based method was configured in the `ukf_template.launch` file.
 
-=== Planning
+Comparative experiments showed that AMCL provided more stable and accurate localization results for the project's environment and conditions. Therefore, we chose AMCL as the primary localization method and integrated it into the entire navigation system.
 
-==== Costmap
-The robotic system's navigation framework utilizes a composite costmap that is divided into global and local representations.
+== Planning
 
-The global costmap represents the environmental model constructed by the Fast-Lio package, with its configuration parameters accessible in the `jackal_navigation/params/costmap_common_params.yaml` file. It provides a high-level overview of the robot's operational terrain.
+=== Costmap
 
-On the other hand, the local costmap focuses on the robot's immediate surroundings, supporting local pathfinding and collision avoidance. It is continuously updated with real-time sensor data, such as laser scans and point clouds, and has a smaller scale but higher resolution compared to the global costmap.
+The robotic system's navigation framework uses a composite costmap divided into global and local representations.
+- The global costmap represents the environmental model constructed by the Fast-Lio package, with its configuration parameters in the `jackal_navigation/params/costmap_common_params.yaml` file. It provides a high-level overview of the robot's operational terrain.
+- The local costmap focuses on the robot's immediate surroundings, supporting local pathfinding and collision avoidance. It is continuously updated with real-time sensor data, such as laser scans and point clouds, and has a smaller scale but higher resolution compared to the global costmap.
 
 #figure(
-  image("assets/planning/global_costmap.png", width: 70%),
+  image("assets/planning/global_costmap.png", width: 60%),
   caption: [Global Costmap],
 ) <fig:global_costmap>
 
-==== Modifying the Original Map
+=== Modifying the Original Map
+
 In autonomous navigation, certain zones, such as control rooms, must be restricted from robotic entry. This can be achieved by modifying the `.pgm` file of the original map using image editing software like GIMP. The pixels corresponding to the restricted area are painted with a solid, obstacle-indicative color (usually black), effectively communicating the presence of insurmountable obstacles to the robot's costmap generation process. However, such direct manipulations alter the map's integrity and may misrepresent the actual layout of the environment. Therefore, this method, while effective, is generally discouraged in favor of more dynamic and reversible approaches.
 
-==== Plugin Layer
+=== Plugin Layer
+
 The `move_base.launch` framework conceptualizes the costmap as comprising multiple layers, each serving a distinct function in the robot's navigation system:
 
 - *Static Layer:* Responsible for integrating pre-existing static maps.
@@ -316,9 +295,9 @@ The `move_base.launch` framework conceptualizes the costmap as comprising multip
 
 To implement spatial constraints and prevent the robot from entering designated zones, the `costmap_prohibition_layer` package is integrated. The parameters delineating the restricted zones are defined within the `jackal_navigation/params/prohibition_layer.yaml` file, demarcating the 'Restricted Area'. The `dynamic_obstacle_updater.py` script dynamically modifies the restricted zones by subscribing to the `/gazebo/cone_position` topic, ascertaining the cone's location, and updating the prohibition parameters to reflect the shifting blockade area.
 
-In the Rviz visualization of the Global Costmap, these designated areas are represented in gray (@fig:amcl_localization), indicating their status as high-cost routes that the navigation algorithm is conditioned to avoid. These modifications preserve the integrity of the underlying static map while overlaying dynamic navigation constraints.
+In the Rviz visualization of the Global Costmap, these designated areas are represented in gray (@fig:global_costmap), indicating their status as high-cost routes that the navigation algorithm is conditioned to avoid. These modifications preserve the integrity of the underlying static map while overlaying dynamic navigation constraints.
 
-==== Global Planning
+=== Global Planning
 
 The A\* algorithm is employed for global planning within the `move_base` package, calculating an optimal path from the robot's starting point to its goal while considering the mapped environment. A\* is a search algorithm that combines the advantages of best-first search and Dijkstra's algorithm to efficiently find the shortest path in a known environment, making it particularly useful for robot path planning and navigation.
 
@@ -334,7 +313,7 @@ The global planner's behavior can be configured through the `jackal_navigation/p
   caption: [Global Navigation to Vehicle 1, 2, and 3],
 )
 
-==== Local Planning
+=== Local Planning
 
 For local planning, the Time-Elastic Band (Teb) algorithm is employed, focusing on real-time adjustments to navigate around immediate obstacles and dynamic environmental changes. The Teb planner's configuration is managed through the `teb_local_planner_params.yaml` file, allowing for fine-tuning of parameters such as obstacle avoidance behavior, robot velocity limits, and path flexibility. These adjustments enable the local planner to adapt to varying conditions, ensuring smooth and efficient navigation.
 
@@ -360,31 +339,27 @@ The Teb planner also includes optimization-related parameters. In this project, 
 The `weight_kinematics_nh` parameter in the TebLocalPlannerROS configuration is a weight value used to consider the robot's non-holonomic constraints during optimization. A value of '1000' indicates that compliance with non-holonomic constraints is considered very important, having a higher priority compared to other optimization objectives. Increasing this weight encourages the path planner to generate paths that are compliant with the robot's non-holonomic motion characteristics, ensuring that the generated paths are safe and feasible for the robot to execute.
 
 #figure(
-  image("assets/planning/inflation_radius_normal.png", width: 40%),
-  caption: [Normal inflation_radius = 0.3],
-) <fig:inflation_normal>
+  placement: bottom,
+  grid(
+    columns: 3,
+    image("assets/planning/inflation_radius_small.png", width: 100%),
+    image("assets/planning/inflation_radius_normal.png", width: 100%),
+    image("assets/planning/inflation_radius_large.png", width: 100%)
+  ),
+  caption: [Effect of Inflation Radius (0.1, 0.3, and 0.5)],
+)<fig:inflation_radius>
 
-#figure(
-  image("assets/planning/inflation_radius_small.png", width: 40%),
-  caption: [Smaller inflation_radius = 0.1],
-) <fig:inflation_small>
+<fig:inflation_radius> illustrate the impact of varying the `inflation_radius` parameter on the costmap. This parameter determines the buffer zone around obstacles where the robot is prohibited from entering. A smaller `inflation_radius` results in a more conservative buffer, potentially leading to overly cautious navigation. Conversely, a larger `inflation_radius` can increase the risk of collision by allowing the robot to approach obstacles too closely. The optimal `inflation_radius` value strikes a balance between safety and efficiency, ensuring smooth and obstacle-free navigation.
 
-#figure(
-  image("assets/planning/inflation_radius_large.png", width: 40%),
-  caption: [Bigger inflation_radius = 0.5],
-) <fig:inflation_large>
-
-@fig:inflation_normal, @fig:inflation_small, and @fig:inflation_large illustrate the impact of varying the `inflation_radius` parameter on the costmap. This parameter determines the buffer zone around obstacles where the robot is prohibited from entering. A smaller `inflation_radius` (@fig:inflation_small) results in a more conservative buffer, potentially leading to overly cautious navigation. Conversely, a larger `inflation_radius` (@fig:inflation_large) can increase the risk of collision by allowing the robot to approach obstacles too closely. The optimal `inflation_radius` value strikes a balance between safety and efficiency, ensuring smooth and obstacle-free navigation.
-
-==== Comparison and Discussion
+=== Comparison and Discussion
 
 In this section, we adapt the position error, heading error, relative position error, and relative heading error as evaluation indices to compare the performance of the robot navigating to the same location (Assembly Line 2) when applied to two different local planners: TEB and DWA. The results are shown in @fig:errors_teb_dwa, and a further comparison is presented in @tab:teb_dwa_comparison.
 
 #figure(
   grid(
     columns: 2,
-    image("assets/errors_dwa.png"),
-    image("assets/errors_teb.png"),
+    image("assets/errors_dwa.png", width: 90%),
+    image("assets/errors_teb.png", width: 90%),
   ),
   caption: [Errors Evaluation of DWA and TEB local Planners],
 ) <fig:errors_teb_dwa>
@@ -392,7 +367,7 @@ In this section, we adapt the position error, heading error, relative position e
 #figure(
   tablex(
     columns: 3,
-    align: center + horizon,
+    align: horizon,
     auto-vlines: false,
     inset: 10pt,
     [*Metric*],    [*TEB*],   [*DWA*],
@@ -404,33 +379,36 @@ In this section, we adapt the position error, heading error, relative position e
   caption: [Comparison of TEB and DWA local planners with A\* global planner]
 ) <tab:teb_dwa_comparison>
 
-=== Object Detection
+== Object Detection
 
-==== Visual Identification of Box3
+=== Visual Identification of Box3
 
 After generating random objects (boxes 1-9 and a cone), setting the box1, box2, box3, or box4 buttons on the simple panel will generate a random target point in the box room area. The random target point subscribes to `box_markers` to load the box's position and size (0.8, 0.8, 0.8) for detecting the box's area. The target point is generated 1 unit away from the `box_marker` to ensure it doesn't appear inside the box. When the Jackal vehicle moves towards the random target, if box3 is not detected, another random target point will be generated in the box room, allowing the Jackal to roam the area.
 
 #figure(
   grid(
     columns: 1,
-    image("assets/random_point.png"),
+    image("assets/random_point.png", width: 90%),
   ),
-  caption: [rondom point in box room],
+  caption: [random point in box room],
 ) <fig:rondom_point>
-
-
-
 
 We employed the `find_object_2d` package, which uses the SIFT feature detection algorithm for image matching. The find object node is added to the `navigation.launch` file and remaps and subscribes to the topics shown in @fig:launch_find_object_3d.
 
-The package loads images of numbers on box3 from different angles as a dataset.
+The package loads images of numbers on box3 from different angles as a dataset, as shown in @fig:box3_images
+
 #figure(
+  placement: bottom,
   grid(
-    columns: 1,
-    image("assets/box3_detection.png"),
+    columns: 4,
+    image("assets/object_detection/number3_1.png", width: 100%),
+    image("assets/object_detection/number3_2.png", width: 100%),
+    image("assets/object_detection/number3_3.png", width: 100%),
+    image("assets/object_detection/number3_4.png", width: 100%),
   ),
-  caption: [box3_detection],
-) <fig:box3_detection>
+  caption: [Box3 images dataset],
+) <fig:box3_images>
+
 When box3 is detected, the `/objects` topic is published, including the detected target ID, width, height, and a 3x3 homography matrix containing the image's location and pose.
 
 To calculate the distance from the Jackal to the target box, depth information is needed. We modified the vehicle's camera to a Kinect depth camera with a 60-degree field of view, a minimum measurement distance of 0.05 meters, and a maximum of 8 meters. The camera publishes:
@@ -466,15 +444,20 @@ $ Z = "depth" $
 To transform the target point from the camera coordinate system to the map coordinate system, the `tf` library is used. A `PointStamped` message containing the 3D coordinates and reference frame (`front_frame_optical`) is created. The `waitForTransform` method is used to wait for the transformation from camera to map coordinate system, and the `transformPoint` method performs the transformation.
 
 Finally, a `PoseStamped` message is constructed with the transformed point's position and default orientation (upwards) and published to `/move_base_simple/goal` to direct the navigation system to move the robot to the target position.
-#figure(
-  grid(
-    columns: 1,
-    image("assets/box3_identification.png"),
-  ),
-  caption: [box3_identification],
-) <fig:box3_identification>
 
-==== Two Methods for Object Detection
+#figure(
+  placement: top,
+  image("assets/object_detection/find_object_3d.png"),
+  caption: [Box3 identification by find_object_3d],
+) <fig:find_object_3d>
+
+#figure(
+  placement: top,
+  image("assets/object_detection/template_matching.png", width: 70%),
+  caption: [Box3 identification by find_object_3d],
+) <fig:template_matching>
+
+=== Two Methods for Object Detection
 
 Object recognition is performed using two methods:
 
@@ -482,7 +465,7 @@ Object recognition is performed using two methods:
 
 2. *Feature-based Matching:* Uses the `find_object_2d` package, which employs the SIFT feature detection algorithm for image matching.
 
-==== Choice of Camera
+=== Choice of Camera
 
 Two approaches were considered for robotic navigation to a specific object:
 
@@ -493,22 +476,23 @@ Two approaches were considered for robotic navigation to a specific object:
 @fig:detection_method_1 and @fig:detection_method_2 illustrate the RGB-D camera-based and non-depth camera-based navigation processes, respectively.
 
 #figure(
-  image("assets/object_detection/detection_method_1.png", width: 80%),
+  image("assets/object_detection/detection_method_1.png", width: 70%),
   caption: [RGB-D Camera-based Navigation Process],
 ) <fig:detection_method_1>
 
 #figure(
-  image("assets/object_detection/detection_method_2.png", width: 80%),
+  image("assets/object_detection/detection_method_2.png", width: 70%),
   caption: [Non-Depth Camera-based Navigation Process],
 ) <fig:detection_method_2>
 
-==== Camera Calibration Policy
+=== Camera Calibration Policy
 
 Upon the detection of an object, it becomes essential to compute the distance from the robot to the object as well as to ascertain the object's pose within the map frame. The camera calibration process integral to these computations is conducted through the calculate_target() function. Once the robot captures a bounding box, this function is invoked to calculate the distance and pose of the object. The process is depicted in @fig:camera_calibration and is outlined as follows:
 
 #figure(
-image("assets/object_detection/camera_calibration.png", width: 100%),
-caption: [Camera Calibration Method],
+  placement: top,
+  image("assets/object_detection/camera_calibration.png", width: 80%),
+  caption: [Camera Calibration Method],
 ) <fig:camera_calibration>
 
 Firstly, the pixel coordinates $(u, v)$ of the target within the image frame, corresponding to the center of the bounding box, are determined by:
@@ -532,13 +516,14 @@ $ X = ((u - c_x) dot Z) / f_x $
 $ Y = ((v - c_y) dot Z) / f_y $
 $ Z = "depth" $
 
-=== Decision making
+== Decision making
 
 The decision making logic is shown in the flowchart below:
 
 #figure(
-image("assets/decision_making/flowchart_decision_making.png"),
-caption: [Flowchart of decision making],
+  placement: top,
+  image("assets/decision_making/flowchart_decision_making.png"),
+  caption: [Flowchart of decision making],
 ) <fig:flowchar_decision_making>
 
 We have mainly used three nodes to implement the decision (i.e. How to get to the desired goal) logic:
@@ -547,22 +532,26 @@ We have mainly used three nodes to implement the decision (i.e. How to get to th
 - `box_explorer_node`: Explore the box location (when the goal is a box). The robot will navigate to the boxes area (where the boxes are spawned) and explore the box location randomly until the box is detected.
 - `template_matching_node`: Continuously detect the object (number 3 on the box) using the template matching method. If the object is detected, the robot will navigate to the object location.
 
-==== Random Exploration Policy
+=== Random Exploration Policy
+
 The random exploration policy is implemented in the `box_explorer_node.cpp` file. A basic process is shown in the figure below:
 
 #figure(
-image("assets/decision_making/random_exploration_policy.png"),
-caption: [Flowchart of decision making],
+  image("assets/decision_making/random_exploration_policy.png"),
+  caption: [Flowchart of decision making],
 ) <fig:random_exploration_policy>
 
 First, we need to randomly select a `goal_pose` in the boxes are, which is implemented in the `createWaypoints()` and `updateCurrentWaypoint()`. Then we need to check where the selected `goal_pose` has collides with the obstacles, which is implemented in the `isPointInObstacle` function. If the `goal_pose` is not in the obstacles, we can navigate to the `goal_pose` directly, if not we need to select another `goal_pose`. The robot will keep exploring the box location until the object is detected.
 
-==== Collision Checking Policy
+=== Collision Checking Policy
+
 In the random exploration process, we need to check whether the selected `goal_pose` is in the obstacles. Initially, we had an idea to subsribe the `/gazebo/global_costmap` and use a circular collision checking method to to check whether the `goal_pose` is in the obstacles. However, we found that the global costmap does not contain the information of the spawned boxes, so the method can not work properly.
 
 Then we implemented the function by subscribing the `box_markers` topic and decided whether the random selected `goal_pose` is near these `box_poses` location. The function is implemented in the `isPointInObstacle()` function (in `box_explorer_node.cpp`).
 
 ]
+
+#pagebreak()
 
 = Appendix
 
@@ -580,6 +569,16 @@ caption: [rosgraph],
   image("assets/appendix/frames.png", width: 100%),
   caption: [TF Tree],
 ) <fig:tf_tree>
+
+#figure(
+  image("assets/mapping/fastlio_yunxingtu.png", width: 60%),
+  caption: [FAST-LIO Running Visualization],
+) <fig:fastlio_yunxingtu>
+
+#figure(
+image("assets/mapping/pcd_to_map.png", width: 80%),
+caption: [Pcd To Map Launch File],
+) <fig:pcd_to_map>
 
 #figure(
   kind: image,
