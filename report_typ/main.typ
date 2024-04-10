@@ -1,6 +1,8 @@
 #import "@preview/charged-ieee:0.1.0": ieee
 #import "@preview/tablex:0.0.8": tablex, rowspanx, colspanx
 
+#[
+
 #show: ieee.with(
   title: [Autonomous Mobile Robotics Final Project Group 10],
   abstract: [
@@ -15,50 +17,50 @@
       email: "A0285295N"
     ),
     (
-      name: "LI ZHANGJIN",
+      name: "Li Zhangjin",
       department: [Mechanical Engineering],
       organization: [National University of Singapore],
       location: [Singapore, Singapore],
       email: "A0285091B"
     ),
     (
-      name: "WANG YUANLONG",
+      name: "Wang Yuanlong",
       department: [Mechanical Engineering],
       organization: [National University of Singapore],
       location: [Singapore, Singapore],
       email: "A0284868E"
     ),
     (
-      name: "ZHAO HUAIYI",
+      name: "Zhao Huaiyi",
       department: [Mechanical Engineering],
       organization: [National University of Singapore],
       location: [Singapore, Singapore],
       email: "A0285277N"
     ),
     (
-      name: "ZHAO XU",
+      name: "Zhao Xu",
       department: [Mechanical Engineering],
       organization: [National University of Singapore],
       location: [Singapore, Singapore],
       email: "A0285284U"
     ),
     (
-      name: "ZHU RONG",
+      name: "Zhu Rong",
       department: [Mechanical Engineering],
       organization: [National University of Singapore],
       location: [Singapore, Singapore],
       email: "A0284901A"
-    )
+    ),
   ),
-  index-terms: ("Scientific writing", "Typesetting", "Document creation", "Syntax"),
+  index-terms: ("Autonomous Mobile Robotics", "SLAM", "ROS", "Object Detection"),
   bibliography: bibliography("refs.bib"),
 )
 
 == Project Description
 
-In the rapidly evolving field of mobile robotics, which is crucial for technological advancement, this project focuses on a simulated mini-factory environment meticulously designed in the Gazebo framework. The setup is divided into three target zones and one restricted area, each designed to evaluate the effectiveness of various mapping and navigational algorithms.
+In the ever-evolving domain of mobile robotics, pivotal for technological advancement, this project is situated within a simulated mini-factory environment, meticulously orchestrated in the Gazebo framework. This setup is delineated into three targeted zones and a singular restricted area, each tailored to appraise the efficacy of diverse mapping and navigational algorithms.
 
-The primary challenge of this project revolves around the development and implementation of an advanced robot navigation software stack. The goal is to guide our designated Jackal robot through a predetermined sequence of locations within the simulation. Starting from the Assembly Line sections labeled 1 and 2, the journey continues through Random Box zones 1 to 4, and concludes at Delivery Vehicle stations 1, 2, and 3, as illustrated in @fig:map_overview. This sequence serves to assess the robot's navigational proficiency and to examine the robustness and adaptability of the underlying algorithms in the dynamic conditions of the simulated mini-factory.
+The core challenge of this initiative revolves around the formulation and deployment of an advanced robot navigation software stack. This is aimed at guiding our designated `Jackal` robot through a predetermined sequence of locations within the simulation. Commencing from the Assembly Line sections labeled 1 and 2, the journey extends through Random Box zones 1 to 4, culminating at Delivery Vehicle stations 1, 2, and 3 which are shown in @fig:map_overview. This sequence serves not only to evaluate the robot's proficiency in navigation but also to scrutinize the robustness and flexibility of the underlying algorithms against the backdrop of the simulated mini-factory's dynamic conditions.
 
 #figure(
 image("assets/map_overview.png", width: 100%),
@@ -76,11 +78,11 @@ caption: [Schematic of mini-factory environment],
 #figure(
   grid(
     columns: 2,
-    image("assets/mapping/carto_2D.png", width: 80%),
-    image("assets/mapping/carto_3D.png", width: 80%),
-    image("assets/mapping/gmapping.png", width: 80%),
+    image("assets/mapping/carto_2D.png", width: 100%),
+    image("assets/mapping/carto_3D.png", width: 100%),
+    image("assets/mapping/gmapping.png", width: 100%),
   ),
-  caption: [Mapping results by carto_2d, carto_3d, and gmapping]
+  caption: [Mapping results by `carto_2d`, `carto_3d`, and `gmapping`]
 )<fig:mapping_results>
 
 === Algorithms Introduction
@@ -91,9 +93,15 @@ The mapping pipeline in this project is built upon the Fast-Lio package, which i
 
 The 16-beam LiDAR system for the robotic platform is initialized through the launch file specified in `src/me5413_world/launch/fast_lio.launch`, with the relevant line as follows:
 
+#block(
+fill: luma(230),
+inset: 8pt,
+radius: 4pt,
+[
 ```xml
 <rosparam command="load" file="$(find fast_lio)/config/velodyne.yaml" />
 ```
+])
 
 The `velodyne.yaml` file contains the configuration for the FAST-LIO package's `laserMapping` node. It specifies the subscribed topics for LiDAR (`/mid/points`) and IMU (`/imu/data`) data, and the node is configured to publish the resulting aligned point cloud to the `/cloud_registered` topic. These settings define the data flow and processing pipeline for the SLAM system.
 
@@ -119,34 +127,24 @@ The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an enhanced LiDAR-b
 The mapping module in FAST-LOAM refines the pose graph to account for drift and optimizes the map globally, ensuring a high-fidelity representation of the environment. The "fast" aspect of FAST-LOAM is achieved through optimizations in feature extraction and selection, enabling it to operate effectively even in computationally constrained scenarios, making it suitable for robotic applications where efficiency and speed are essential.
 
 #figure(
-  image("assets/mapping/f-loam_pcd.png", width: 50%),
-  caption: [Unfiltered Point Cloud by FAST-LOAM],
-) <fig:f_loam_pcd>
+  grid(
+    columns: 2,
+    image("assets/mapping/f-loam_pcd.png"),
+    image("assets/mapping/a-loam_pcd.png")
+  ),
+  caption: [Unfiltered Point Cloud by F-LOAM (Left) and A-LOAM (Right)],
+) <fig:f_loam_and_a_loam_pcd>
 
-@fig:f_loam_pcd depicts the environment's point cloud generated by FAST-LOAM, elucidating its efficacy in navigating the specified areas within the mini-factory. By synthesizing a coherent navigational map from raw sensor inputs, FAST-LOAM supports the Jackal robot's mandate to navigate efficiently and accurately, as mandated by the project's goals.
+@fig:f_loam_and_a_loam_pcd left depicts the environment's point cloud generated by FAST-LOAM, elucidating its efficacy in navigating the specified areas within the mini-factory. By synthesizing a coherent navigational map from raw sensor inputs, FAST-LOAM supports the Jackal robot's mandate to navigate efficiently and accurately, as mandated by the project's goals.
 
 ==== A-LOAM
-Within the A-LOAM framework, which advances the original LiDAR Odometry and Mapping (LOAM) system through refined feature extraction and code architecture leveraging Eigen and the Ceres Solver, specific topic remappings are essential for its operation. These remappings facilitate the algorithm's real-time pose estimation and environmental mapping capabilities:
+Within the A-LOAM framework, which advances the original LiDAR Odometry and Mapping (LOAM) system through refined feature extraction and code architecture leveraging Eigen and the Ceres Solver, specific topic remappings are essential for its operation. These remappings facilitate the algorithm's real-time pose estimation and environmental mapping capabilities, as shown in @fig:remap_a_loam.
 
-```xml
-<remap from="scan" to="/front/scan"/>
-<remap from="odom" to="/odometry/filtered"/>
-<remap from="imu" to="/imu/data"/>
-<remap from="fix" to="/navsat/fix"/>
-<remap from="/velodyne_points" to="/mid/points"/>
-```
-
-#figure(
-image("assets/mapping/a-loam_pcd.png", width: 50%),
-caption: [Unfiltered Point Cloud by A-LOAM],
-) <fig:aloam_pcd>
-
-@fig:aloam_pcd shows A-LOAM's output, a refined version of LOAM, featuring a selectively sparse point cloud.
+@fig:f_loam_and_a_loam_pcd right shows A-LOAM's output, a refined version of LOAM, featuring a selectively sparse point cloud.
 
 === Map Generation
 
 ==== Point Cloud Filtering
-
 Through the execution of three algorithms, we have generated three raw point cloud maps. To extract more meaningful regions from the raw point cloud, we need to apply filtering.
 
 We developed a _pcd_to_map.launch_ file to implement this functionality.
@@ -155,7 +153,7 @@ The dimensional filtering was performed by setting _thre_radius = 0.3_ and _thre
 
 #figure(
 image("assets/mapping/pcd_to_map.png", width: 80%),
-caption: [Pcd TO Map Launch File],
+caption: [Pcd To Map Launch File],
 ) <fig:pcd_to_map>
 
 Additionally, the _flag_pass_through_ was set to 1, which selects the points outside of the specified height range. This helps to remove unwanted points, such as those belonging to buildings or other tall structures, and focus on the desired regions of interest.
@@ -200,11 +198,7 @@ The raw point cloud maps and the filtered point cloud maps generated by the thre
 
 @fig:aloam_map presents the mapping outcome of A-LOAM. The sparsity is due to the hardware limitations of the Jackal platform's 16-beam LiDAR sensor.
 
-In the process of enhancing the A-LOAM algorithm's scanning capabilities, an adjustment in the sensor configuration is mandated. Specifically, the substitution of the 3D LiDAR model from VLP-16 to HDL-32E within the Jackal robot's Unified Robot Description Format (URDF) files. This alteration is conducted in the accessories.urdf.xacro file located at _src/jackal_description/urdf_. The modification is succinctly encapsulated in the following XML property definition:
-
-```xml
-<xacro:property name="lidar_3d_model" value= "$(optenv JACKAL_LASER_3D_MODEL vlp16)"/>
-```
+In the process of enhancing the A-LOAM algorithm's scanning capabilities, an adjustment in the sensor configuration is mandated. Specifically, the substitution of the 3D LiDAR model from VLP-16 to HDL-32E within the Jackal robot's Unified Robot Description Format (URDF) files. This alteration is conducted in the accessories.urdf.xacro file located at _src/jackal_description/urdf_.
 
 To effectuate the desired change for enabling the HDL-32E LiDAR configuration, the value parameter _vlp16_ is to be replaced with _hdl32e_.
 
@@ -216,15 +210,27 @@ In this evaluation of SLAM algorithms, FAST-LIO distinguishes itself as the supe
 
 The operational data stream captured during the FAST-LIO algorithm's execution is critical for post-mission performance analysis. A ROS node within the _fast_lio.launch_ file is tasked with recording this data into a bag file.
 
-```xml
-<node name="record_bag" pkg="rosbag" type="record" args="-O $(find me5413_world)/result/output.bag /gazebo/ground_truth/state /Odometry" />
-```
+#block(
+fill: luma(230),
+inset: 8pt,
+radius: 4pt,
+[
+  ```xml
+  <node name="record_bag" pkg="rosbag" type="record" args="-O $(find me5413_world)/result/output.bag /gazebo/ground_truth/state /Odometry" />
+  ```
+])
 
 This bag file is then used for the Absolute Pose Error (APE) analysis by executing the _evo_ape_ command. The command for this evaluation is as follows:
 
+#block(
+fill: luma(230),
+inset: 8pt,
+radius: 4pt,
+[
 ```sh
 evo_ape bag output.bag /gazebo/ground_truth/state /Odometry -r full -va --plot --plot_mode xy
 ```
+])
 
 This assessment provides quantitative insights into the FAST-LIO algorithm's positional accuracy by comparing the estimated trajectory with the ground truth using visual plots. Such rigorous analysis is essential for verifying the algorithm's performance and ensuring that it meets the navigational requirements of the project's mini-factory environment.
 
@@ -244,27 +250,31 @@ caption: [FAST-LIO APE Analysis],
 
 Upon meticulous evaluation, FAST-LIO emerges as the superior algorithm among its counterparts, FAST-LOAM and A-LOAM, for the project at hand. FAST-LIO's integration of LiDAR and IMU data facilitates a higher resolution and fidelity in environmental mapping, allowing for more accurate and consistent pose estimation.
 
-== Task 2: Navigation
+= Task 2: Navigation
 
-Robot localization refers to the capability of a robot to ascertain its position and bearing within a given coordinate system. It serves as the foundation for path planning, wherein the robot not only identifies its current locale but also computes the trajectory to a designated target within the same spatial framework. Localization and path planning are interdependent, the former establishing a basis for the latter within the context of navigation using an extant map.
+Navigation is a critical capability for robots, involving two key components: localization and path planning.
 
-In the context of Task 2, these functions are embodied within a hierarchical structure delineating the robot's navigation assignment. This structural hierarchy outlines the robot's transformation framework, known as the TF tree. The TF tree represents the various coordinate frames and their interrelations, essential for the robot's spatial orientation and movement planning in the environment.
+== Localization
 
-=== Localization
+Localization allows the robot to determine its position and orientation within a given coordinate system, which is essential for effective path planning. The robot's various coordinate frames and their relationships are represented in the TF (transformation) tree.
 
-==== AMCL
-In this project, we utilized the Adaptive Monte Carlo Localization (AMCL) algorithm from ROS for the robot's localization task. AMCL is an adaptive particle filter-based localization algorithm that efficiently estimates the robot's pose in dynamic environments.
+=== AMCL
+For this project, we used the Adaptive Monte Carlo Localization (AMCL) algorithm from ROS. AMCL is a particle filter-based localization method that can efficiently estimate the robot's pose even in dynamic environments. Key parameters of the AMCL algorithm were configured in the `amcl.launch` file:
 
-The key parameters of the AMCL algorithm were configured in the `amcl.launch` file:
+- `odom_model_type="diff"`: Specifies the use of the differential drive model for the robot's motion.
+- Min/max number of particles set to 8000/10000 for improved accuracy.
+- KLD sampling error (`kld_err`) set to 1.5 to reduce max error between true and estimated distributions.
+- KLD confidence (`kld_z`) set to 0.5 for more conservative particle count adjustment.
+- Likelihood field sensor model used to handle measurement errors.
+- `update_min_d` and `update_min_a` set to trigger localization updates and improve robustness.
 
-- `odom_model_type="diff"`: Differential drive model to describe the robot's motion characteristics.
-- Minimum and maximum number of particles set to 8000 and 10000, respectively, to improve localization accuracy.
-- KLD sampling error parameter (`kld_err`) adjusted to 1.5 to reduce the maximum error between the true and estimated distributions.
-- KLD confidence parameter (`kld_z`) set to 0.5, making the algorithm more conservative in deciding whether to increase the number of particles.
-- Likelihood field sensor model adopted to handle measurement errors in dynamic environments.
-- Minimum translation and rotation thresholds (`update_min_d` and `update_min_a`) set to trigger localization updates and improve robustness.
+Additional parameters for the global and local cost maps were configured in
 
-Additionally, the `global_costmap_params.yaml`, `local_costmap_params.yaml`, and `costmap_common_params.yaml` files were used to configure the parameters of the global and local cost maps, providing important environmental information for path planning and navigation tasks.
+- `global_costmap_params.yaml`
+- `local_costmap_params.yaml`
+- `costmap_common_params.yaml`
+
+These cost maps provide important environmental information for path planning and navigation.
 
 #figure(
   image("assets/localization/prohibition.png", width: 80%),
@@ -411,20 +421,7 @@ After generating random objects (boxes 1-9 and a cone), setting the box1, box2, 
 
 
 
-We employed the `find_object_2d` package, which uses the SIFT feature detection algorithm for image matching. The find object node is added to the `navigation.launch` file and remaps and subscribes to the following topics:
-
-```xml
-<node name="find_object_3d" pkg="find_object_2d" type="find_object_2d" output="screen">
-  <param name="gui" value="true" type="bool"/>
-  <param name="settings_path" value="~/.ros/find_object_2d.ini" type="str"/>
-  <param name="subscribe_depth" value="true" type="bool"/>
-  <param name="objects_path" value="$(find me5413_world)/pictures" type="str"/>
-  <param name="object_prefix" value="object" type="str"/>
-  <remap from="rgb/image_rect_color" to="/front/rgb/image_raw"/>
-  <remap from="/depth_registered/camera_info" to="/front/depth/camera_info"/>
-  <remap from="/depth_registered/image_raw" to="/front/depth/image_raw"/>
-</node>
-```
+We employed the `find_object_2d` package, which uses the SIFT feature detection algorithm for image matching. The find object node is added to the `navigation.launch` file and remaps and subscribes to the topics shown in @fig:launch_find_object_3d.
 
 The package loads images of numbers on box3 from different angles as a dataset.
 #figure(
@@ -496,12 +493,12 @@ Two approaches were considered for robotic navigation to a specific object:
 @fig:detection_method_1 and @fig:detection_method_2 illustrate the RGB-D camera-based and non-depth camera-based navigation processes, respectively.
 
 #figure(
-  image("assets/object_detection/detection_method_1.png", width: 100%),
+  image("assets/object_detection/detection_method_1.png", width: 80%),
   caption: [RGB-D Camera-based Navigation Process],
 ) <fig:detection_method_1>
 
 #figure(
-  image("assets/object_detection/detection_method_2.png", width: 100%),
+  image("assets/object_detection/detection_method_2.png", width: 80%),
   caption: [Non-Depth Camera-based Navigation Process],
 ) <fig:detection_method_2>
 
@@ -533,8 +530,7 @@ Employing the camera intrinsic matrix $K$, the 3D point in the camera frame is c
 
 $ X = ((u - c_x) dot Z) / f_x $
 $ Y = ((v - c_y) dot Z) / f_y $
-
-pagebreak()
+$ Z = "depth" $
 
 === Decision making
 
@@ -566,7 +562,14 @@ In the random exploration process, we need to check whether the selected `goal_p
 
 Then we implemented the function by subscribing the `box_markers` topic and decided whether the random selected `goal_pose` is near these `box_poses` location. The function is implemented in the `isPointInObstacle()` function (in `box_explorer_node.cpp`).
 
+]
+
 = Appendix
+
+#figure(
+  image("assets/flowchart.png", width: 100%),
+  caption: [Flowchart of the whole project],
+)
 
 #figure(
 image("assets/appendix/rosgraph.png", width: 100%),
@@ -575,8 +578,49 @@ caption: [rosgraph],
 
 #figure(
   image("assets/appendix/frames.png", width: 100%),
-  caption: [rosgraph],
-) <fig:rosgraph>
+  caption: [TF Tree],
+) <fig:tf_tree>
+
+#figure(
+  kind: image,
+  block(
+    fill: luma(230),
+    inset: 8pt,
+    radius: 4pt,
+    [
+      ```xml
+      <remap from="scan" to="/front/scan"/>
+      <remap from="odom" to="/odometry/filtered"/>
+      <remap from="imu" to="/imu/data"/>
+      <remap from="fix" to="/navsat/fix"/>
+      <remap from="/velodyne_points" to="/mid/points"/>
+      ```
+    ],
+  ),
+  caption: [Remap configuration for the `A-LOAM` node]
+)<fig:remap_a_loam>
 
 
-
+#figure(
+  kind: image,
+  block(
+    fill: luma(230),
+    inset: 8pt,
+    radius: 4pt,
+    [
+      ```xml
+      <node name="find_object_3d" pkg="find_object_2d" type="find_object_2d" output="screen">
+        <param name="gui" value="true" type="bool"/>
+        <param name="settings_path" value="~/.ros/find_object_2d.ini" type="str"/>
+        <param name="subscribe_depth" value="true" type="bool"/>
+        <param name="objects_path" value="$(find me5413_world)/pictures" type="str"/>
+        <param name="object_prefix" value="object" type="str"/>
+        <remap from="rgb/image_rect_color" to="/front/rgb/image_raw"/>
+        <remap from="/depth_registered/camera_info" to="/front/depth/camera_info"/>
+        <remap from="/depth_registered/image_raw" to="/front/depth/image_raw"/>
+      </node>
+      ```
+    ],
+  ),
+  caption: [ROS launch configuration of the `find_object_3d` node],
+)<fig:launch_find_object_3d>
