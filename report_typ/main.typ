@@ -405,12 +405,12 @@ After generating random objects (boxes 1-9 and a cone), setting the box1, box2, 
     columns: 1,
     image("assets/random_point.png", width: 90%),
   ),
-  caption: [random point in box room],
+  caption: [Random point in box room],
 ) <fig:rondom_point>
 
 We employed the `find_object_2d` package, which uses the SIFT feature detection algorithm for image matching. The find object node is added to the `navigation.launch` file and remaps and subscribes to the topics shown in @fig:launch_find_object_3d.
 
-The package loads images of numbers on box3 from different angles as a dataset, as shown in @fig:box3_images
+The package loads images of numbers on box3 from different angles as a dataset, as shown in @fig:box3_templates.
 
 #figure(
   placement: auto,
@@ -421,8 +421,8 @@ The package loads images of numbers on box3 from different angles as a dataset, 
     image("assets/object_detection/number3_3.png", width: 100%),
     image("assets/object_detection/number3_4.png", width: 100%),
   ),
-  caption: [Box3 images dataset],
-) <fig:box3_images>
+  caption: [Box3 templates dataset],
+) <fig:box3_templates>
 
 When box3 is detected, the `/objects` topic is published, including the detected target ID, width, height, and a 3x3 homography matrix containing the image's location and pose.
 
@@ -566,6 +566,16 @@ First, we need to randomly select a `goal_pose` in the boxes are, which is imple
 In the random exploration process, we need to check whether the selected `goal_pose` is in the obstacles. Initially, we had an idea to subsribe the `/gazebo/global_costmap` and use a circular collision checking method to to check whether the `goal_pose` is in the obstacles. However, we found that the global costmap does not contain the information of the spawned boxes, so the method can not work properly.
 
 Then we implemented the function by subscribing the `box_markers` topic and decided whether the random selected `goal_pose` is near these `box_poses` location. The function is implemented in the `isPointInObstacle()` function (in `box_explorer_node.cpp`).
+
+= Conclusion
+
+This project successfully developed an autonomous navigation system for a Jackal robot in a simulated mini-factory environment using ROS and Gazebo. The system integrates state-of-the-art algorithms, including FAST-LIO for mapping, AMCL for localization, A\* for global path planning, and Teb for local planning. The robot navigates through a predefined sequence of locations while avoiding obstacles and detecting a specific object using template matching and the `find_object_2d` package.
+
+The project demonstrates the effectiveness of the selected algorithms in mapping, localization, and navigation tasks. The FAST-LIO algorithm provides a high-quality 3D map of the environment, while AMCL ensures accurate robot localization. The A\* and Teb planners enable efficient global and local path planning, respectively. The object detection module successfully identifies the target object, allowing the robot to navigate to its location.
+
+The system's performance was evaluated through rigorous testing and analysis, validating its ability to navigate the mini-factory environment autonomously. The project showcases the potential of ROS-based autonomous navigation systems for industrial applications and highlights the importance of integrating multiple algorithms to achieve robust and efficient robot navigation.
+
+Future work could focus on further optimizing the system, incorporating more advanced object detection and recognition techniques, and adapting the system to real-world industrial environments. The project serves as a foundation for developing autonomous mobile robotics solutions in various domains, contributing to the advancement of intelligent and efficient robotic systems.
 
 ]
 
