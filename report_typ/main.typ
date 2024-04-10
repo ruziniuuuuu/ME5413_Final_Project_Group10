@@ -633,10 +633,6 @@ caption: [Pcd To Map Launch File],
     radius: 4pt,
     [
       ```xml
-      <remap from="scan" to="/front/scan"/>
-      <remap from="odom" to="/odometry/filtered"/>
-      <remap from="imu" to="/imu/data"/>
-      <remap from="fix" to="/navsat/fix"/>
       <remap from="/velodyne_points" to="/mid/points"/>
       ```
     ],
