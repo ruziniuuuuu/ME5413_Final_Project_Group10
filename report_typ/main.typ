@@ -385,6 +385,7 @@ In this section, we adapt the position error, heading error, relative position e
 After generating random objects (boxes 1-9 and a cone), setting the box1, box2, box3, or box4 buttons on the simple panel will generate a random target point in the box room area. The random target point subscribes to `box_markers` to load the box's position and size (0.8, 0.8, 0.8) for detecting the box's area. The target point is generated 1 unit away from the `box_marker` to ensure it doesn't appear inside the box. When the Jackal vehicle moves towards the random target, if box3 is not detected, another random target point will be generated in the box room, allowing the Jackal to roam the area.
 
 #figure(
+  placement: top,
   grid(
     columns: 1,
     image("assets/random_point.png", width: 90%),
@@ -475,11 +476,13 @@ Two approaches were considered for robotic navigation to a specific object:
 @fig:detection_method_1 and @fig:detection_method_2 illustrate the RGB-D camera-based and non-depth camera-based navigation processes, respectively.
 
 #figure(
+  placement: bottom,
   image("assets/object_detection/detection_method_1.png", width: 70%),
   caption: [RGB-D Camera-based Navigation Process],
 ) <fig:detection_method_1>
 
 #figure(
+  placement: bottom,
   image("assets/object_detection/detection_method_2.png", width: 70%),
   caption: [Non-Depth Camera-based Navigation Process],
 ) <fig:detection_method_2>
