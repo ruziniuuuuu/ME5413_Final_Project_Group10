@@ -161,7 +161,7 @@ The random exploration policy is implemented in the `box_explorer_node.cpp` file
 
 ![Random Exploration Policy](assets/random_exploration.png)
 
-First, we need to randomly select a `goal_pose` in the boxes are, which is implemented in the `createWaypoints()` and `updateCurrentWaypoint()`. Then we need to check where the selected `goal_pose` has collides with the obstacles, which is implemented in the `isPointInObstacle` function. If the `goal_pose` is not in the obstacles, we can navigate to the `goal_pose` directly, if not we need to select another `goal_pose`. The robot will keep exploring the box location until the object is detected.
+First, we need to randomly select a `goal_pose` in the area where boxes spawned, which is implemented in the `createWaypoints()` and `updateCurrentWaypoint()`. Then we need to check where the selected `goal_pose` has collides with the obstacles, which is implemented in the `isPointInObstacle` function. If the `goal_pose` is not in the obstacles, we can navigate to the `goal_pose` directly, if not we need to select another `goal_pose`. The robot will keep exploring the box location until the object is detected.
 
 #### Collision Checking Policy
 
@@ -202,7 +202,7 @@ ME5413_Final_Project_Group10
 │   │   ├── src -> C++ scripts
 │   │   │   ├── object_spawner_gz_plugin.cpp -> Gazebo plugin for spawning the object (boxes and cones)
 │   │   │   ├── goal_publisher_node.cpp -> Publish the goal location (when goal is not box)
-│   │   │   ├── box_explore_node.cpp -> Explore the box location (when goal is box)
+│   │   │   ├── box_explorer_node.cpp -> Explore the box location (when goal is box)
 │   │   │   └── template_matching.cpp -> Template matching method for object detection
 │   │   └── scripts -> Python scripts  
 │   │       ├── sift_detection_node_py.py -> SIFT method for object detection
@@ -296,7 +296,7 @@ roslaunch me5413_world main.launch
 - [x] Implement the template matching method for object detection.
 - [x] Implement the `ORB` or `SIFT` method for object detection. (`find_object_2d`)
 - [ ] Train a YOLO detctor for object detection. (may be trained from a small `mnist` dataset)
-- [ ] Attempt to use the RGB-D camera to detect the object.
+- [x] Attempt to use the RGB-D camera to detect the object.
 - [ ] Attempt to use the stereo camera to detect the object.
 - [ ] Capture the `cone` in the gazebo world from the camera.
 
@@ -336,6 +336,8 @@ We would like to express our gratitude to the teaching team of ME5413 for provid
 - [pcd2pgm_package](https://github.com/Hinson-A/pcd2pgm_package.git): A package for converting `.pcd` files to `.pgm` files.
 - [costmap_prohibition_layer](https://github.com/rst-tu-dortmund/costmap_prohibition_layer.git): A package for prohibiting the robot from entering the area.
 - [excalidraw](https://github.com/excalidraw/excalidraw.git): A whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them.
+- [typst](https://github.com/typst/typst.git): A new markup-based typesetting system that is designed to be as powerful as LaTeX while being much easier to learn and use.
+- [TouYing](https://github.com/touying-typ/touying.git): A powerful and efficient package for creating presentation slides in Typst.
 
 ## License
 
