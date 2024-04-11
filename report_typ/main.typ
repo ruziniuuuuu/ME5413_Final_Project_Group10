@@ -604,7 +604,13 @@ caption: [rosgraph],
 ) <fig:fastlio_yunxingtu>
 
 #figure(
-  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 50%),
+  image("assets/mapping/fast_lio_rosnode.png", width: 60%),
+  caption: [fast_lio_rosnode],
+) <fig:fast_lio_rosnode>
+
+
+#figure(
+  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 40%),
   caption: [A-LOAM Running Visualization],
 ) <fig:A-LOAM_Running_Visualization>
 
@@ -614,7 +620,7 @@ caption: [rosgraph],
 ) <fig:A-Loam_rosnode>
 
 #figure(
-  image("assets/mapping/FLOAM Running Visualization.png", width: 40%),
+  image("assets/mapping/FLOAM Running Visualization.png", width: 35%),
   caption: [F-LOAM Running Visualization],
 ) <fig:F-LOAM_Running_Visualization>
 
