@@ -113,7 +113,7 @@ The varying densities of points within the image indicate the algorithm's capabi
 
 === FAST-LOAM
 
-The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios.
+The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios. As shown in @fig:remap_f_loam, the `floam_mapping.launch` file configures the algorithm's parameters and remappings for real-time operation.
 
 #figure(
   grid(
@@ -378,7 +378,6 @@ In this section, we adapt the position error, heading error, relative position e
 ) <fig:errors_teb_dwa>
 
 #figure(
-  placement: auto,
   tablex(
     columns: 3,
     align: horizon,
