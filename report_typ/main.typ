@@ -113,7 +113,7 @@ The varying densities of points within the image indicate the algorithm's capabi
 
 === FAST-LOAM
 
-The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios. The implementation of the FLOAM：the floam_mapping.launch file contains a tf static transform node, transforming from world to map. In the cpp file of the odom node, the tf transformation of the map is changed from base_link to transform to odom. Afterwards, adjust the sensor parameters in the launch file.
+The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios.
 
 #figure(
   grid(
@@ -604,13 +604,7 @@ caption: [rosgraph],
 ) <fig:fastlio_yunxingtu>
 
 #figure(
-  image("assets/mapping/fast_lio_rosnode.png", width: 60%),
-  caption: [fast_lio_rosnode],
-) <fig:fast_lio_rosnode>
-
-
-#figure(
-  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 40%),
+  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 60%),
   caption: [A-LOAM Running Visualization],
 ) <fig:A-LOAM_Running_Visualization>
 
@@ -618,6 +612,11 @@ caption: [rosgraph],
   image("assets/mapping/A-Loam_rosnode.png", width: 60%),
   caption: [A-Loam_rosnode],
 ) <fig:A-Loam_rosnode>
+
+#figure(
+image("assets/mapping/pcd_to_map.png", width: 60%),
+caption: [Pcd To Map Launch File],
+) <fig:pcd_to_map>
 
 #figure(
   image("assets/mapping/FLOAM Running Visualization.png", width: 35%),
@@ -629,14 +628,6 @@ caption: [rosgraph],
   image("assets/mapping/floam_rosnode.png", width: 60%),
   caption: [floam_rosnode],
 ) <fig:floam_map_rosnode>
-
-
-
-#figure(
-image("assets/mapping/pcd_to_map.png", width: 60%),
-caption: [Pcd To Map Launch File],
-) <fig:pcd_to_map>
-
 
 #figure(
   kind: image,
@@ -668,7 +659,7 @@ caption: [Pcd To Map Launch File],
     ],
   ),
   caption: [Remap configuration for the `F-LOAM` node]
-)<fig:remap_F_loam>
+)<fig:remap_f_loam>
 
 
 #figure(
