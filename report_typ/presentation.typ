@@ -219,7 +219,12 @@
 #slide[
   = Modifying the Original Map
 
-  In autonomous navigation, certain zones, such as control rooms, must be restricted from robotic entry. This can be achieved by modifying the `.pgm` file of the original map using image editing software like GIMP. The pixels corresponding to the restricted area are painted with a solid, obstacle-indicative color (usually black), effectively communicating the presence of insurmountable obstacles to the robot's costmap generation process. However, such direct manipulations alter the map's integrity and may misrepresent the actual layout of the environment. Therefore, this method, while effective, is generally discouraged in favor of more dynamic and reversible approaches.
+  In autonomous navigation, certain zones, such as control rooms, must be restricted from robotic entry. This can be achieved by modifying the `.pgm` file of the original map using image editing software like GIMP.
+
+  #figure(
+    image("assets/mapping/gimp.png", width: 37%),
+    caption: [Editing the `.pgm` file using GIMP],
+  ) <fig:gimp>
 ]
 
 // #slide[
