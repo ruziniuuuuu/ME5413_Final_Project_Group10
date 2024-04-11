@@ -489,6 +489,25 @@
 #slide[
   = Visual Identification of Box3
 
+  We have used 4 templates to identify the box3 object. The templates are shown in @fig:templates. The `find_object_3d` package is used to identify the box3 object. The `template_matching` method is also used for comparison.
+
+  #figure(
+    grid(
+      columns: 4,
+      image("assets/object_detection/number3_1.png", width: 80%),
+      image("assets/object_detection/number3_2.png", width: 80%),
+      image("assets/object_detection/number3_3.png", width: 80%),
+      image("assets/object_detection/number3_4.png", width: 80%),
+    ),
+    caption: [Templates used in Object Detection],
+  ) <fig:templates>
+]
+
+#slide[
+  = Visual Identification of Box3
+
+  @fig:find_object_3d and @fig:template_matching show the identification of using `find_object_3d` and `template_matching` methods, respectively.
+
   #grid(
     columns: 2,
     [
@@ -606,6 +625,44 @@
     return false;
   }
   ```
+]
+
+= Future Work
+
+#slide[
+  = Future Work
+
+  == Mapping
+
+  - [$checkmark$] Implement the `Fast-Lio`, `gmapping`, `Cartographer`, `A-LOAM`, and `F-LOAM` mapping methods.
+  - [$checkmark$] Save the best map as a `.pgm` file. (mapped by `Fast-Lio`)
+  - [ ] Record the mapping process to a ros bag file.
+  - [ ] Deploy or design a randomly exploration policy to autonomously map the environment.
+
+  == Object Detection
+
+  - [$checkmark$] Implement the template matching method for object detection.
+  - [$checkmark$] Implement the `ORB` or `SIFT` method for object detection. (`find_object_2d`)
+  - [ ] Train a YOLO detctor for object detection. (may be trained from a small `mnist` dataset)
+  - [$checkmark$] Attempt to use the RGB-D camera to detect the object.
+  - [ ] Attempt to use the stereo camera to detect the object.
+  - [ ] Capture the `cone` in the gazebo world from the camera.
+
+  == Localization
+
+  - [$checkmark$] Implement the `AMCL` method for localization.
+  - [$checkmark$] Tune the parameters of the `AMCL` package to get better localization results.
+  - [ ] Solve the drifting problem in localization.
+
+  ==  Planning
+
+  - [$checkmark$] Implement the `A*` global planner.
+  - [$checkmark$] Implement the `Teb` local planner.
+    - [$checkmark$] Tune the parameters of the `Teb` local planner to get better navigation results.
+    - [$checkmark$] Avoid the dynamic object when navigating to the goal location. (boxes and cones)
+  - [$checkmark$] Successfully navigate the robot to the goal location.
+  - [ ] Change the global planner to other planners (`GBFS` or `RRT*`) and compare the performance.
+  - [$checkmark$] Change the local planner to other planners (`DWA` or `EBand`) and compare the performance.
 ]
 
 #focus-slide[
