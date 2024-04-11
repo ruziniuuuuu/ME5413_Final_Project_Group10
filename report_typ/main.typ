@@ -113,7 +113,7 @@ The varying densities of points within the image indicate the algorithm's capabi
 
 === FAST-LOAM
 
-The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios.
+The Fast LiDAR Odometry and Mapping (FAST-LOAM) algorithm is an efficient LiDAR-based SLAM approach that builds upon LOAM. It extracts and utilizes features from point cloud data for odometry estimation and mapping. The mapping module refines the pose graph and optimizes the map globally. Optimizations in feature extraction and selection enable FAST-LOAM to operate effectively in computationally constrained scenarios. The implementation of the FLOAM：the floam_mapping.launch file contains a tf static transform node, transforming from world to map. In the cpp file of the odom node, the tf transformation of the map is changed from base_link to transform to odom. Afterwards, adjust the sensor parameters in the launch file.
 
 #figure(
   grid(
@@ -599,12 +599,12 @@ caption: [rosgraph],
 ) <fig:tf_tree>
 
 #figure(
-  image("assets/mapping/fastlio_yunxingtu.png", width: 60%),
+  image("assets/mapping/fastlio_yunxingtu.png", width: 50%),
   caption: [FAST-LIO Running Visualization],
 ) <fig:fastlio_yunxingtu>
 
 #figure(
-  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 60%),
+  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 40%),
   caption: [A-LOAM Running Visualization],
 ) <fig:A-LOAM_Running_Visualization>
 
@@ -614,9 +614,15 @@ caption: [rosgraph],
 ) <fig:A-Loam_rosnode>
 
 #figure(
-image("assets/mapping/pcd_to_map.png", width: 60%),
-caption: [Pcd To Map Launch File],
-) <fig:pcd_to_map>
+  image("assets/mapping/FLOAM Running Visualization.png", width: 40%),
+  caption: [F-LOAM Running Visualization],
+) <fig:F-LOAM_Running_Visualization>
+
+
+#figure(
+  image("assets/mapping/floam_rosnode.png", width: 60%),
+  caption: [floam_rosnode],
+) <fig:floam_map_rosnode>
 
 
 
@@ -624,6 +630,7 @@ caption: [Pcd To Map Launch File],
 image("assets/mapping/pcd_to_map.png", width: 60%),
 caption: [Pcd To Map Launch File],
 ) <fig:pcd_to_map>
+
 
 #figure(
   kind: image,
@@ -639,6 +646,23 @@ caption: [Pcd To Map Launch File],
   ),
   caption: [Remap configuration for the `A-LOAM` node]
 )<fig:remap_a_loam>
+
+#figure(
+  kind: image,
+  block(
+    fill: luma(230),
+    inset: 8pt,
+    radius: 4pt,
+    [
+      ```xml
+      <remap from="/velodyne_points" to="/mid/points"/>
+      <remap from="/odom" to="/odometry/filtered"/>
+      <remap from="/cam03/image_raw" to="/front/image_raw"/>
+      ```
+    ],
+  ),
+  caption: [Remap configuration for the `F-LOAM` node]
+)<fig:remap_F_loam>
 
 
 #figure(
