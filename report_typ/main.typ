@@ -393,6 +393,8 @@ In this section, we adapt the position error, heading error, relative position e
   caption: [Comparison of TEB and DWA local planners with A\* global planner]
 ) <tab:teb_dwa_comparison>
 
+We can observe that the TEB local planner outperforms the DWA local planner in terms of RMSE Position, RMSE Heading, RMS Relative Position, and RMS Relative Heading. The TEB planner demonstrates superior accuracy and stability in navigating the robot to the desired location, with lower error values across all evaluation metrics. This performance advantage is attributed to TEB's real-time obstacle avoidance capabilities and dynamic path planning, which enable the robot to navigate more efficiently and safely in complex environments.
+
 == Object Detection
 
 === Visual Identification of Box3

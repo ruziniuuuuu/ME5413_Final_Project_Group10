@@ -441,7 +441,7 @@
 ]
 
 #slide[
-  = Comprasion and Discussion
+  = Comparasion and Discussion
 
   #grid(
     columns: (1fr, 2fr),
@@ -462,7 +462,9 @@
 ]
 
 #slide[
-  = Comprasion and Discussion
+  = Comparison and Discussion
+
+  We can observe that the TEB local planner outperforms the DWA local planner. The TEB planner demonstrates superior accuracy and stability in navigating the robot to the desired location, with lower error values across all evaluation metrics. This performance advantage is attributed to TEB's real-time obstacle avoidance capabilities and dynamic path planning, which enable the robot to navigate more efficiently and safely in complex environments.
 
   #figure(
     tablex(
