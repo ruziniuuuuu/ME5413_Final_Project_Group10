@@ -599,12 +599,12 @@ caption: [rosgraph],
 ) <fig:tf_tree>
 
 #figure(
-  image("assets/mapping/fastlio_yunxingtu.png", width: 50%),
+  image("assets/mapping/fastlio_yunxingtu.png", width: 60%),
   caption: [FAST-LIO Running Visualization],
 ) <fig:fastlio_yunxingtu>
 
 #figure(
-  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 40%),
+  image("assets/mapping/A-LOAM_Running_Visualization.png", width: 50%),
   caption: [A-LOAM Running Visualization],
 ) <fig:A-LOAM_Running_Visualization>
 
