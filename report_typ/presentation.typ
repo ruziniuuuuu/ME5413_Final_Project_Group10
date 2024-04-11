@@ -345,15 +345,31 @@
 ]
 
 #slide[
-  = Plugin Layer
+  = Prohibition Area
+  
+  == Restricted Area
 
-  The `move_base.launch` framework conceptualizes the costmap as comprising multiple layers, each serving a distinct function in the robot's navigation system:
+  Prohit the robot from entering the restricted area:
 
-  - *Static Layer:* Responsible for integrating pre-existing static maps.
-  - *Obstacle Layer:* Manages dynamic obstacle inflation during the robot's movement, ensuring that transient obstacles are effectively incorporated into the navigation strategy.
-  - *Inflation Layer:* Extends the representation of obstacles within the navigation plane, effectively enlarging the obstacles' footprint on the map.
+  ```yaml
+  prohibition_areas:
+  - [[4, 1], [1, 1]]
+  ```
 
-  To implement spatial constraints and prevent the robot from entering designated zones, the `costmap_prohibition_layer` package is integrated. The parameters delineating the restricted zones are defined within the `jackal_navigation/params/prohibition_layer.yaml` file, demarcating the 'Restricted Area'. The `dynamic_obstacle_updater.py` script dynamically modifies the restricted zones by subscribing to the `/gazebo/cone_position` topic, ascertaining the cone's location, and updating the prohibition parameters to reflect the shifting blockade area.
+  == Random Blockade
+  Prohibit the robot from entering the random blockade area.
+   
+  #block(
+  ```Python
+  def cone_position_callback(msg):
+    x, y = msg.point.x, msg.point.y
+    rospy.loginfo("Received cone position: x = %s, y = %s", x, y)
+    update_prohibition_area(x, y)
+  def update_prohibition_area(x, y):
+    # Update the prohibition area based on the cone position
+    pass
+  ```
+  )
 ]
 
 #slide[
@@ -456,10 +472,10 @@
       auto-vlines: false,
       inset: 10pt,
       [*Metric*],    [*TEB*],   [*DWA*],
-      [RMSE Position], [3.137], [3.572],
-      [RMSE Heading], [44.378], [50.977],
-      [RMS Relative Position], [5.389], [5.860],
-      [RMS Relative Heading], [78.542], [85.406]
+      [RMSE Position], [*3.137*], [3.572],
+      [RMSE Heading], [*44.378*], [50.977],
+      [RMS Relative Position], [*5.389*], [5.860],
+      [RMS Relative Heading], [*78.542*], [85.406]
     ),
     caption: [Comparison of TEB and DWA local planners with A\* global planner]
   ) <tab:teb_dwa_comparison>
