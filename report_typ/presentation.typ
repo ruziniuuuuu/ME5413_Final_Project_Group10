@@ -346,10 +346,10 @@
 
 #slide[
   = Prohibition Area
-  
+
   == Restricted Area
 
-  Prohit the robot from entering the restricted area:
+  Prohit the robot from entering the restricted area (`prohibition_areas.yaml`):
 
   ```yaml
   prohibition_areas:
@@ -357,7 +357,7 @@
   ```
 
   == Random Blockade
-  Prohibit the robot from entering the random blockade area.
+  Prohibit the robot from entering the random blockade area. (Subscribing the `cone_position` topic and update the prohibition area dynamically)
    
   #block(
   ```Python
@@ -367,7 +367,6 @@
     update_prohibition_area(x, y)
   def update_prohibition_area(x, y):
     # Update the prohibition area based on the cone position
-    pass
   ```
   )
 ]
@@ -490,11 +489,27 @@
 
   + *Feature-based Matching:* Uses the `find_object_2d` package, which employs the SIFT feature detection algorithm for image matching.
 
+  #figure(
+    grid(
+      columns: (1fr, 2fr),
+        image("assets/object_detection/template_matching.png", width: 70%),
+        image("assets/object_detection/find_object_3d.png", width: 70%),
+    ),
+    caption: [Template Matching and Feature-based Matching],
+  )
+]
+
+#slide[
+  = Two Methods For Navigating To The Object
+
+  + *Use a RGB-D camera:* we can directly get the depth information of the object. Then we can use the depth information to calculate the distance between the robot and the object. This method is more accurate and efficient.
+  + *Keep the original non-depth camera (and give a dummy depth):* we can navigate to the detected object by only using the 2D image information. This method is less accurate and may cause the robot to collide with obstacles.
+
   #grid(
     columns: 2,
     [
       #figure(
-      image("assets/object_detection/detection_method_1.png", width: 60%),
+      image("assets/object_detection/detection_method_1.png", width: 50%),
       caption: [RGB-D Camera-based],
     ) <fig:detection_method_1>
     ],
@@ -530,16 +545,16 @@
   @fig:find_object_3d and @fig:template_matching show the identification of using `find_object_3d` and `template_matching` methods, respectively.
 
   #grid(
-    columns: 2,
+    columns: (2fr, 1fr),
     [
       #figure(
-        image("assets/object_detection/find_object_3d.png"),
+        image("assets/object_detection/find_object_3d.png", width: 80%),
         caption: [Box3 identification by `find_object_3d`],
       ) <fig:find_object_3d>
     ],
     [
       #figure(
-        image("assets/object_detection/template_matching.png", width: 70%),
+        image("assets/object_detection/template_matching.png", width: 90%),
         caption: [Box3 identification by `template matching`],
       ) <fig:template_matching>
     ]
@@ -568,8 +583,10 @@
 #slide[
   = Camera Calibration Method
 
+  By applying the camera calibration method, the three-dimensional point $(X, Y, Z)$ can be calculated, a schematic of which is shown in @fig:camera_calibration.
+
   #grid(
-    columns: (1fr, 4fr),
+    columns: (1fr, 3fr),
     [
       $ X = ((u - c_x) dot Z) / f_x $
       $ Y = ((v - c_y) dot Z) / f_y $
@@ -601,7 +618,7 @@
 #slide[
   = Decision Making Flowchart
 
-  We have mainly used three nodes to implement the decision (i.e. How to get to the desired goal) logic:
+  We have mainly used three nodes to implement the decision (i.e. How to get to the desired goal) logic (Assuming that we use the non-depth camera and template matching method to detect the object):
 
   - `goal_publisher_node`: Publish the goal location (when the goal is not a box). The robot will navigate to the goal location directly.
   - `box_explorer_node`: Explore the box location (when the goal is a box). The robot will navigate to the boxes area (where the boxes are spawned) and explore the box location randomly until the box is detected.
@@ -611,7 +628,7 @@
 #slide[
   = Random Exploration Policy
 
-  The random exploration policy is implemented in the `box_explorer_node.cpp` file. A basic process is shown in the figure below:
+  The random exploration policy is implemented in the `box_explorer_node.cpp` file. A basic process is shown in @fig:random_exploration_policy. 
 
   #figure(
     image("assets/decision_making/random_exploration_policy.png", width: 80%),
@@ -658,7 +675,7 @@
   - [$checkmark$] Implement the `Fast-Lio`, `gmapping`, `Cartographer`, `A-LOAM`, and `F-LOAM` mapping methods.
   - [$checkmark$] Save the best map as a `.pgm` file. (mapped by `Fast-Lio`)
   - [ ] Record the mapping process to a ros bag file.
-  - [ ] Deploy or design a randomly exploration policy to autonomously map the environment.
+  - [ ] Deploy or design *a randomly exploration policy* to autonomously map the environment.
 
   == Object Detection
 
