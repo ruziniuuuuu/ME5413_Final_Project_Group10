@@ -51,10 +51,3 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
-
-# Pdf guidance
-ME5413_Final Project.pdf
-
-# Report
-template.pdf
-Presentation.md
