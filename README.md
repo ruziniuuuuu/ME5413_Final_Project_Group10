@@ -7,7 +7,7 @@
 
 This is our implementation of the [ME5413_Final_Project](https://github.com/NUS-Advanced-Robotics-Centre/ME5413_Final_Project). For the original project description and instructions, please refer to the [ORIGINAL_README.md](ORIGINAL_README.md) file. The reflections and issues we encountered during the project are recorded in the [REFLECTIONS.md](REFLECTIONS.md) and [ISSUES.md](ISSUES.md) files, respectively.
 
-<video src="assets/me5413_video.mp4" controls width="640"></video>
+https://github.com/user-attachments/assets/d847c6f9-3222-4aab-8b43-7799b2bc29b7
 
 ## Introduction
 
